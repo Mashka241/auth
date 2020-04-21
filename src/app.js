@@ -1,5 +1,6 @@
-import './styles.css'
+import { Question } from './question'
 import { isValid } from './utils'
+import './styles.css'
 
 const form = document.getElementById('form')
 const input = form.querySelector('#question-input')
@@ -12,15 +13,14 @@ const submitFormHandler = (evt) => {
       text: input.value.trim(),
       date: new Date().toJSON()
     }
-
     submitBtn.disabled = true
     // async request to server to save question
-    console.log('Question', question)
-    input.value = ''
-    input.className = ''
-    submitBtn.disabled = false
+    Question.create(question).then(() => {
+      input.value = ''
+      input.className = ''
+      submitBtn.disabled = false
+    })
   }
-  console.log(input.value)
 }
 
 form.addEventListener('submit', submitFormHandler)
